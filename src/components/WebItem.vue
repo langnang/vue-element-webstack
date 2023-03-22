@@ -26,13 +26,13 @@
             <el-table-column align="center" show-overflow-tooltip prop="description" label="描述"></el-table-column>
           </el-table>
           <el-row v-else :gutter="10" @contextmenu.native.stop="$event => user_info ? $refs['guide-contextmenu'].handleRowContextMenu(item, $event) : null">
-            <el-col :span="6" v-for="(web, idx) in sites" :key="idx" @contextmenu.native.stop="$event => user_info ? $refs['guide-contextmenu'].handleRowContextMenu(web, $event, item) : null">
+            <el-col :xs="{ span: 24 }" :sm="{ span: 12 }" :md="{ span: 8 }" :lg="{ span: 6 }" :xl="{ span: 4 }" v-for="(web, idx) in sites" :key="idx" @contextmenu.native.stop="$event => user_info ? $refs['guide-contextmenu'].handleRowContextMenu(web, $event, item) : null">
               <el-tooltip effect="dark" :content="web.url" placement="bottom">
                 <el-card shadow="hover" @click.native="openweb(web.url)" style="margin: 10px 0 0 0; height: 76px; cursor: pointer" body-style="padding:10px;">
                   <el-tag v-if="web.status !== 'public'" type="danger" effect="dark" style="float: right;height:unset;line-height: unset;padding:0; margin-right: -10px;margin-top: -10px;">{{ web.status }}</el-tag>
                   <div class="xe-comment-entry">
                     <div class="xe-user-img">
-                      <img :src="web.icon" style="width: 40px; height: 40px" class="lozad img-circle" width="40" />
+                      <img v-lazy="web.icon" style="width: 40px; height: 40px" class="lozad img-circle" width="40" />
                     </div>
                     <div class="xe-comment" style="margin-left: 40px;">
                       <a href="#" class="xe-user-name overflowClip_1">

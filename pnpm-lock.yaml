@@ -29,6 +29,7 @@ specifiers:
   sass-loader: ^7.3.1
   v-contextmenu: ^2.9.0
   vue: ^2.6.11
+  vue-lazyload: 1.3.4
   vue-router: ^3.2.0
   vue-runtime-helpers: ^1.1.2
   vue-template-compiler: ^2.6.11
@@ -70,6 +71,7 @@ devDependencies:
   node-sass: 4.14.1
   prettier: 2.8.4
   sass-loader: 7.3.1
+  vue-lazyload: 1.3.4
   vue-runtime-helpers: 1.1.2
   vue-template-compiler: 2.7.14
   vuex-persist: 3.1.3_vuex@3.6.2
@@ -9841,6 +9843,10 @@ packages:
 
   /vue-hot-reload-api/2.3.4:
     resolution: {integrity: sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==}
+    dev: true
+
+  /vue-lazyload/1.3.4:
+    resolution: {integrity: sha512-K0frbPQJuvFHVpdl/ov5CqCR/CHWeLGs8E8V1d/09DIETqBjeGhC1fLMmwUy3Go2Yd/VX610AZ7Mdn4B54592Q==}
     dev: true
 
   /vue-loader/15.10.1_j7knk6mol3vthgvrc443rvn57u:
