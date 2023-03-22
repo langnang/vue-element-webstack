@@ -10,7 +10,7 @@ axios.defaults.headers.common["Authorization"] = getToken();
 // console.log(process.env);
 let config = {
   // baseURL: process.env.VUE_APP_BASE_API || process.env.BASE_URL || "",
-  baseURL: process.env.NODE_ENV === "production" ? "/?" : "", // url = base url + request url
+  baseURL: process.env.NODE_ENV === "production" ? "" : "", // url = base url + request url
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
 };
