@@ -19,28 +19,29 @@
 
         <el-popover v-if="form.type === 'category'" class="icon-select__wrapper" placement="bottom" width="700" trigger="click">
           <el-input slot="reference" v-model="form.icon" disabled>
-            <template slot="append"><i class="el-icon-setting"></i></template>
+            <el-button slot="append" icon="el-icon-setting">
+            </el-button>
           </el-input>
-          <el-tabs v-model="iconGroupActive">
-            <el-tab-pane v-for="(list, index) in iconGroup" :key="index" :label="list.label" :name="list.value">
-              <el-row :gutter="20" style="margin:0;">
-                <el-scrollbar style="height:300px;">
-                  <el-col v-for="(icon, idx) in list.children" :key="idx" :label="icon" :span="3" style="margin-right:0;margin-bottom:4px;" @click.native="onIconSelectClick(icon)">
+          <el-tabs v-model="iconGroupActive" type="border-card" @tab-click="handleTabClick">
+            <el-tab-pane v-for="(list, index) in iconGroup" :key="index" :label="list.label + '(' + (iconGroupActive == list.value ? (count * 8 < list.children.length ? count * 8 : list.children.length) : 0) + '/' + list.children.length + ')'" :name="list.value" lazy>
+              <el-scrollbar style="height:300px;">
+                <el-row :gutter="20" style="margin:0;" v-infinite-scroll="load">
+                  <el-col v-for="(icon, idx) in list.children.slice(0, count * 8)" :key="idx" :label="icon" :span="3" style="margin-right:0;margin-bottom:4px;" @click.native="onIconSelectClick(icon)">
                     <div :class="['icon-select__item', { 'is-active': form.icon === icon }]">
                       <component :is="['font_awesome_solids', 'font_awesome_regulars', 'font_awesome_brands'].includes(list.value) ? 'font-awesome-icon' : 'i'" :icon="icon.split(' ')" :class="icon"></component>
                     </div>
                   </el-col>
-                </el-scrollbar>
-              </el-row>
+                </el-row>
+              </el-scrollbar>
             </el-tab-pane>
           </el-tabs>
         </el-popover>
       </el-form-item>
       <el-form-item v-if="form.type === 'site'" label="地址" prop="url">
         <el-input v-model="form.url" clearable>
-          <template slot="append">
+          <el-button slot="append" @click="onCrawlerSite">
             <font-awesome-icon :icon="['fas', 'spider']" @click="onCrawlerSite"></font-awesome-icon>
-          </template>
+          </el-button>
         </el-input>
       </el-form-item>
       <el-form-item v-if="user_info" label="状态" prop="status">
@@ -129,16 +130,24 @@ export default {
         { label: "Font Awesome Regulars", value: "font_awesome_regulars", children: farIcons },
         { label: "Font Awesome Brands", value: "font_awesome_brands", children: fabIcons }
       ],
+      count: 10,
     }
   },
   computed: {
     ...mapGetters(["user_info"])
   },
   methods: {
+    handleTabClick() {
+      this.count = 10;
+    },
+    load() {
+      this.count += 2;
+    },
     toggle(row = {}, readonly = false) {
       this.readonly = readonly
       this.form = { ...guideOriginForm, status: this.user_info ? 'public' : 'draft', ...row }
       this.title = (readonly ? '查看' : this.form.id ? '编辑' : '新增') + getGuideType(row.type).label
+      this.count = 10;
       this.visible = !this.visible
       this.$refs.form ? this.$refs.form.resetFields() : null;
     },
